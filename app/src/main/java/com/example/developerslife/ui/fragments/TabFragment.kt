@@ -11,13 +11,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class TabFragment : Fragment(R.layout.tab_fragment_layout) {
 
-    lateinit var sectionViewPager: ViewPager2
-    lateinit var sectionTabLayout: TabLayout
+    private lateinit var sectionViewPager: ViewPager2
+    private lateinit var sectionTabLayout: TabLayout
+    private val latestPostsFragment by lazy { LatestPostsFragment() }
+    private val topPostsFragment by lazy { TopPostsFragment() }
+    private val hotPostsFragment by lazy { HotPostsFragment() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sectionViewPager = view.findViewById(R.id.tabFragmentViewPager)
-        sectionTabLayout = view.findViewById(R.id.tabFragmentTabLayout)
+        initView(view)
         initViewPager()
     }
 
@@ -25,7 +27,7 @@ class TabFragment : Fragment(R.layout.tab_fragment_layout) {
         val championshipViewPagerAdapter = SectionViewPagerAdapter(this)
         sectionViewPager.adapter = championshipViewPagerAdapter
         championshipViewPagerAdapter.pages =
-            listOf(LatestPostsFragment(), TopPostsFragment(), HotPostsFragment())
+            listOf(latestPostsFragment, topPostsFragment, hotPostsFragment)
 
         TabLayoutMediator(sectionTabLayout, sectionViewPager) { tab: TabLayout.Tab, i: Int ->
             when (i) {
@@ -34,5 +36,10 @@ class TabFragment : Fragment(R.layout.tab_fragment_layout) {
                 2 -> tab.text = "Горячие"
             }
         }.attach()
+    }
+
+    private fun initView(view: View) {
+        sectionViewPager = view.findViewById(R.id.tabFragmentViewPager)
+        sectionTabLayout = view.findViewById(R.id.tabFragmentTabLayout)
     }
 }
