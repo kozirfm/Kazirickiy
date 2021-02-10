@@ -13,14 +13,24 @@ class TabFragment : Fragment(R.layout.tab_fragment_layout) {
 
     private lateinit var sectionViewPager: ViewPager2
     private lateinit var sectionTabLayout: TabLayout
-    private val latestPostsFragment by lazy { LatestPostsFragment() }
-    private val topPostsFragment by lazy { TopPostsFragment() }
-    private val hotPostsFragment by lazy { HotPostsFragment() }
+    private val latestPostsFragment by lazy { MainFragment() }
+    private val topPostsFragment by lazy { MainFragment() }
+    private val hotPostsFragment by lazy { MainFragment() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
         initViewPager()
+
+        latestPostsFragment.arguments = Bundle().apply {
+            putString("key", "latest")
+        }
+        topPostsFragment.arguments = Bundle().apply {
+            putString("key", "top")
+        }
+        hotPostsFragment.arguments = Bundle().apply {
+            putString("key", "hot")
+        }
     }
 
     private fun initViewPager() {
