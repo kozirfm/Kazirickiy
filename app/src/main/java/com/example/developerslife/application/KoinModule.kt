@@ -5,10 +5,10 @@ import com.example.developerslife.model.datasource.RemoteDataSourceImplementatio
 import com.example.developerslife.model.repository.Repository
 import com.example.developerslife.model.repository.RepositoryImplementation
 import com.example.developerslife.model.retrofit.RetrofitApi
-import com.example.developerslife.ui.viewmodels.HotPostsViewModel
-import com.example.developerslife.ui.viewmodels.LatestPostsViewModel
-import com.example.developerslife.ui.viewmodels.TopPostsViewModel
+import com.example.developerslife.ui.fragments.TabFragment
+import com.example.developerslife.ui.viewmodels.MainViewModel
 import kotlinx.serialization.ExperimentalSerializationApi
+import org.koin.androidx.fragment.dsl.fragment
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,7 +20,9 @@ val networkModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { LatestPostsViewModel(get(), get()) }
-    viewModel { TopPostsViewModel(get(), get()) }
-    viewModel { HotPostsViewModel(get(), get()) }
+    viewModel { (selection: String) -> MainViewModel(get(), selection = selection, get()) }
+}
+
+val fragmentModule = module {
+    fragment { TabFragment() }
 }

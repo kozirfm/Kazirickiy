@@ -1,5 +1,6 @@
 package com.example.developerslife.ui.viewmodels
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,12 +17,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel(private val context: Context, private val repository: Repository) :
+class MainViewModel(private val application: Application, private val selection: String, private val repository: Repository) :
     ViewModel() {
 
-    abstract val selection: String
-
-    private val viewState = MutableLiveData<ViewState>()
+    val viewState = MutableLiveData<ViewState>()
 
     private val listResult = ArrayList<Post>()
 
@@ -32,9 +31,8 @@ abstract class BaseViewModel(private val context: Context, private val repositor
         viewState.value = Error(throwable)
     }
 
-    fun getData(): LiveData<ViewState> {
+    init {
         requestPage(page)
-        return viewState
     }
 
     fun requestPage(page: Int = this.page + 1) {
@@ -47,7 +45,7 @@ abstract class BaseViewModel(private val context: Context, private val repositor
                 }
                 viewState.value = Data(listResult[postCount])
             } else {
-                viewState.value = Error(context.getString(R.string.empty_list))
+                viewState.value = Error(application.getString(R.string.empty_list))
             }
         }
     }
