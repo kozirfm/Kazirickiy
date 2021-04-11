@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Developers Life</string>
+    <string name="empty_list">К сожалению, постов пока нет, но скоро они появятся</string>
+    <string name="update">Обновить</string>
+    <string name="connection_error">Произошла ошибка при загрузке данных. Проверьте подключение к сети.</string>
+    <string name="repeat">Повторить</string>
 </resources>
